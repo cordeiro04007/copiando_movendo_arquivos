@@ -1,6 +1,8 @@
 from pathlib import Path
 import shutil
 import os
+import datetime
+
 
 
 # CRIANDO AS PASTAS
@@ -8,7 +10,7 @@ nome_pastas = ['organizada', 'csv', 'html', 'json', 'pdf', 'py', 'txt', 'xlsx', 
 
 def criando_pastas(nome_pasta_criada=''):
     pasta_atual = Path(__file__).parent
-    if not os.path.isdir(pasta_atual):
+    if not os.path.isdir(pasta_atual / 'organizada'):
         caminho_pasta_destino = pasta_atual / nome_pasta_criada
         caminho_pasta_destino.mkdir(exist_ok=True)
 
@@ -33,14 +35,19 @@ for pasta in nome_pastas:
 
 # COPIANDO OS ARQUIVOS PARA AS PASTAS ESPECÍFICAS
 
-def copiando_arquivos(pasta_específica= '',copiar_arquivos = ''):
+def copiando_arquivos():
     pasta_atual = Path(__file__).parent
-    caminho_arquivo = pasta_atual /'arquivos_desafio'/ copiar_arquivos
-    caminho_pasta_destino = pasta_atual / 'organizada'/ pasta_específica / copiar_arquivos
-    shutil.copy2(caminho_arquivo, caminho_pasta_destino)
-        
-
-copiando_arquivos(pasta_específica= 'pdf', copiar_arquivos= 'vheeu.pdf')   
+    pasta_organizada = pasta_atual / 'organizada'
+    pasta_a_organizar = pasta_atual / 'arquivos_desafio'
+    #pasta_backup = pasta_atual / 'backups'
+    for arquivo in pasta_a_organizar.glob('**/*'):
+        if arquivo.is_file():
+            pasta_organizada_c_extensão = pasta_organizada / arquivo.suffix.replace('.', '')
+            if not pasta_organizada_c_extensão.exists():
+                pasta_organizada_c_extensão.mkdir()
+            shutil.copy(arquivo, pasta_organizada_c_extensão)
+                                        
+copiando_arquivos()   
     
 
     
