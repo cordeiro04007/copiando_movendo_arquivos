@@ -37,11 +37,10 @@ def copiando_arquivos(pasta_específica= '',copiar_arquivos = ''):
     pasta_atual = Path(__file__).parent
     caminho_arquivo = pasta_atual /'arquivos_desafio'/ copiar_arquivos
     caminho_pasta_destino = pasta_atual / 'organizada'/ pasta_específica / copiar_arquivos
-    termina_com = ''
-    if copiar_arquivos.endswith(termina_com):
-        shutil.copy2(caminho_arquivo, caminho_pasta_destino)
+    shutil.copy2(caminho_arquivo, caminho_pasta_destino)
+        
 
-copiando_arquivos(pasta_específica= 'pdf', copiar_arquivos= '' )   
+copiando_arquivos(pasta_específica= 'pdf', copiar_arquivos= 'vheeu.pdf')   
     
 
     
