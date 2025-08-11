@@ -3,8 +3,6 @@ import shutil
 import os
 import datetime
 
-
-
 # CRIANDO AS PASTAS
 nome_pastas = ['organizada', 'csv', 'html', 'json', 'pdf', 'py', 'txt', 'xlsx', 'backups']
 
@@ -42,12 +40,27 @@ def copiando_arquivos():
     #pasta_backup = pasta_atual / 'backups'
     for arquivo in pasta_a_organizar.glob('**/*'):
         if arquivo.is_file():
-            pasta_organizada_c_extensão = pasta_organizada / arquivo.suffix.replace('.', '')
-            if not pasta_organizada_c_extensão.exists():
-                pasta_organizada_c_extensão.mkdir()
-            shutil.copy(arquivo, pasta_organizada_c_extensão)
+            pasta_organizada_c_extensao = pasta_organizada / arquivo.suffix.replace('.', '')
+            if not pasta_organizada_c_extensao.exists():
+                pasta_organizada_c_extensao.mkdir()
+                shutil.copy(arquivo, pasta_organizada_c_extensao)
                                         
-copiando_arquivos()   
+copiando_arquivos()
+
+################################################################
+
+# COMPACTANDO A PASTA ORGANIZADA E MOVENDO PARA A PASTA BACKUP
+nome_backup = datetime.datetime.now().strftime('%Y_%m_%d')
+print(nome_backup)
+
+def criando_backup ():
+    pasta_atual = Path(__file__).parent
+    pasta_organizada = pasta_atual / 'organizada'
+    pasta_backups = pasta_atual / 'backups'
+    shutil.make_archive(pasta_backups/ nome_backup, 'zip', pasta_organizada)
+
+criando_backup()
+
     
 
     
